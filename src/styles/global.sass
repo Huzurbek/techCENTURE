@@ -1,0 +1,76 @@
+html,
+body
+    padding: 0
+    margin: 0
+    background-color: white
+    overflow-x: hidden
+@font-face
+    font-family: Poppins
+    src: url("./Poppins-Regular.ttf")
+a
+    color: inherit
+    text-decoration: none
+*
+    box-sizing: border-box
+
+@keyframes scrollright
+    0%
+        transform: translateX(-100%)
+    100%
+        transform: translateX(0)
+@keyframes blink
+    50%
+        opacity: 0
+    100%
+        transform: translateX(0)
+
+@keyframes scrollleft
+    0%
+        transform: translateX(0)
+    100%
+        transform: translateX(-100%)
+.slider
+    margin: auto
+    overflow: hidden
+    position: relative
+    display: flex
+    align-items: center
+.ellipsis
+    display: -webkit-box
+    line-gap-override: 3
+    -webkit-line-clamp: 3
+    -webkit-box-orient: vertical
+    overflow: hidden
+    text-overflow: ellipsis
+.slide-track-right
+    animation: scrollright 25s linear infinite
+    display: flex
+    flex-wrap: nowrap
+    width: 100%
+.slide-track-left>div,
+.slide-track-right>div
+    min-width: 140px
+.slide-track-left
+    animation: scrollleft 25s linear infinite
+    display: flex
+    width: 100%
+.slider
+    .slide
+        width: 250px
+        margin: 0 20px
+    .tool-slide
+        width: 250px
+        margin: 0 5px
+.slide
+    img
+        width: 100%
+.tool-slide
+    img
+        width: 100%
+.end-cursor
+    &:after
+        content: '|'
+        color: #1E2A39
+    &.blinking
+        &:after
+            animation: blink 1s step-start infinite

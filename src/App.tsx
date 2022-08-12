@@ -1,26 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./styles/global.sass";
+import { ThemeProvider } from "@mui/material";
+import { theme } from "./styles/theme";
+import Navbar from "../src/layouts/UI/Navbar/Navbar";
+import Footer from "../src/layouts/UI/Footer";
+import Home from "./Home";
 
-function App() {
+const MyApp: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Navbar />
+      <Home />
+      <Footer />
+    </ThemeProvider>
   );
-}
+};
 
-export default App;
+export default MyApp;
