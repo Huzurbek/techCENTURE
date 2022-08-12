@@ -11,7 +11,7 @@ const StyledTitle = styled(Typography)(({ theme }) => ({
 
 const superpowers = ["Change The Course Of Your Life"];
 
-const SuperPowers = () => {
+const SuperPowers: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
   const {
     typedSuperpower,
     selectedSuperpower,
@@ -20,7 +20,10 @@ const SuperPowers = () => {
   } = useTypedSuperpower(superpowers);
 
   return (
-    <Box onClick={resume} sx={{ minHeight: "180px", minWidth: "530px" }}>
+    <Box
+      onClick={resume}
+      sx={{ minHeight: isMobile ? window.innerHeight * 0.4 : "180px" }}
+    >
       <StyledTitle> A Course That Can</StyledTitle>
       <StyledTitle
         // #5B72EE

@@ -1,21 +1,31 @@
-import { Box, Typography, Button, styled } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  styled,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import { MButton } from "../../components/Button";
 import SuperPowers from "../../components/TypingAnimation/TypingAnimation";
 
 const Wrapper = styled(Box)(({ theme }) => ({
-  maxWidth: "1084px",
+  maxWidth: "1080px",
   display: "flex",
   justifyContent: "space-between",
-  alignItems: "center",
+  alignItems: "flex-start",
   position: "relative",
   margin: "0 auto",
   width: "100%",
+
   // outline: '1px solid red'
 }));
 interface IModalProps {
   handleEnrollModal: () => void;
 }
 const TrainingHeader: React.FC<IModalProps> = ({ handleEnrollModal }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down(1000));
   return (
     <Box>
       <svg viewBox="0 0 1 1" style={{ position: "absolute" }}>
@@ -30,23 +40,35 @@ const TrainingHeader: React.FC<IModalProps> = ({ handleEnrollModal }) => {
       </svg>
       <Box
         sx={{
-          // marginLeft:"-100%", for mobile
-          // width: "300%", for mobile
           position: "relative",
-          width: "100%",
+          width: isMobile ? "200%" : "100%",
           height: "90vh",
+          marginLeft: isMobile ? "-50%" : "0",
           background: "#FAE8EC",
           clipPath: "url('#maska')",
           display: "flex",
           alignItems: "flex-end",
         }}
       >
-        <Wrapper>
-          <Box sx={{ maxWidth: "600px" }}>
-            <SuperPowers />
+        <Wrapper
+          style={{
+            maxHeight: window.innerHeight,
+            height: isMobile ? window.innerHeight * 0.7 : "auto",
+            maxWidth: isMobile ? `${window.innerWidth}px` : "1080px",
+            justifyContent: isMobile ? "center" : "space-between",
+          }}
+        >
+          <Box
+            sx={{
+              maxWidth: isMobile ? "100%" : "600px",
+              width: "100%",
+              textAlign: isMobile ? "center" : "left",
+            }}
+          >
+            <SuperPowers isMobile={isMobile} />
             <Typography
               sx={{
-                maxWidth: "420px",
+                maxWidth: isMobile ? "100%" : "420px",
                 fontWeight: "500",
                 fontSize: "16px",
                 color: "#696984",
@@ -71,13 +93,16 @@ const TrainingHeader: React.FC<IModalProps> = ({ handleEnrollModal }) => {
             </MButton>
           </Box>
 
-          <img
-            src="/assets/studentBg.png"
-            style={{
-              height: "610px",
-              right: "90px",
-            }}
-          />
+          {!isMobile && (
+            <img
+              src="/assets/studentBg.png"
+              height={window.innerHeight * 0.7}
+              style={{
+                right: "90px",
+                marginBottom: "-22px",
+              }}
+            />
+          )}
         </Wrapper>
       </Box>
     </Box>
