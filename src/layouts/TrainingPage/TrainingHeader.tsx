@@ -1,4 +1,5 @@
 import { Box, Typography, Button, styled } from "@mui/material";
+import { MButton } from "../../components/Button";
 import SuperPowers from "../../components/TypingAnimation/TypingAnimation";
 
 const Wrapper = styled(Box)(({ theme }) => ({
@@ -54,13 +55,12 @@ const TrainingHeader: React.FC<IModalProps> = ({ handleEnrollModal }) => {
             >
               Become a QA Automation Engineer in just 24 weeks.
             </Typography>
-            <Button
+            <MButton
               onClick={handleEnrollModal}
               variant="contained"
               color="error"
               sx={{
-                borderRadius: "80px",
-                height: "40px",
+                borderRadius: "20px",
                 width: "150px",
                 fontWeight: "600",
                 fontSize: "16px",
@@ -68,7 +68,7 @@ const TrainingHeader: React.FC<IModalProps> = ({ handleEnrollModal }) => {
               }}
             >
               Apply Now
-            </Button>
+            </MButton>
           </Box>
 
           <img

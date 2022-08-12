@@ -5,7 +5,6 @@ import {
   FormControl,
   TextField,
   FormControlLabel,
-  Button,
   FormGroup,
   FormLabel,
   styled,
@@ -23,6 +22,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import SelectField from "./SelecField";
+import { MButton } from "../../components/Button";
 
 enum Options {
   Online = "online",
@@ -291,28 +291,24 @@ const EnrollForm: React.FC<IModalProps> = ({ handleEnrollModal }) => {
               />
             </RadioGroup>
           </StyledFormControl>
-          <StyledFormControl
-            fullWidth
-            sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
+
+          <MButton
+            size="large"
+            variant="contained"
+            color="primary"
+            sx={{ width: "fit-content", alignSelf: "end", color: "white" }}
+            onClick={() => input.current?.click()}
           >
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{ width: "fit-content", alignSelf: "end", color: "white" }}
-              onClick={() => input.current?.click()}
-            >
-              Choose your pdf file
-            </Button>
-          </StyledFormControl>
-          <StyledFormControl
-            fullWidth
+            Choose your pdf file
+          </MButton>
+          <Box
             sx={{
-              flexDirection: "row",
+              mt: 3,
+              display: "flex",
               justifyContent: "space-between",
-              marginTop: "10px",
             }}
           >
-            <Button
+            <MButton
               variant="contained"
               color="error"
               sx={{ width: "fit-content", alignSelf: "end" }}
@@ -321,16 +317,16 @@ const EnrollForm: React.FC<IModalProps> = ({ handleEnrollModal }) => {
               }}
             >
               Clear
-            </Button>
-            <Button
+            </MButton>
+            <MButton
               variant="contained"
               color="error"
               sx={{ width: "fit-content", alignSelf: "end" }}
               type="submit"
             >
               Submit
-            </Button>
-          </StyledFormControl>
+            </MButton>
+          </Box>
         </Form>
       </FormikProvider>
     </StyledMainContainer>

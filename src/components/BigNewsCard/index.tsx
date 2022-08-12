@@ -6,8 +6,7 @@ export default function BigNewsCard() {
       <div style={{ display: "flex", flexDirection: "column" }}>
         <img
           src="https://www.protocol.com/media-library/data-center.jpg?id=30418702&width=1245&quality=85&coordinates=0%2C656%2C0%2C656&height=700"
-          width="500px"
-          height="300px"
+          width="100%"
           alt="bigNewsCard"
           style={{ borderRadius: "20px", overflow: "hidden" }}
         />

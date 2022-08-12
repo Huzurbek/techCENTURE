@@ -16,6 +16,7 @@ import {
   Box,
 } from "@mui/material";
 import React from "react";
+import { MButton } from "./Button";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -196,22 +197,23 @@ const CourseCard: React.FC<ICourseCard> = ({
             </StyledContentText>
           </CardContent>
         </Collapse>
-        <StyledCardActions disableSpacing>
-          <StyledApplyButton
+        <Box px={2} pb={2} textAlign="right">
+          <MButton
             onClick={handleExpandClick}
             variant="text"
+            color="inherit"
             sx={{
+              mb: 1,
               color: "#252641",
               fontWeight: "400",
-              textDecorationLine: "underline",
             }}
           >
             {expanded ? "Less" : "Learn more"}
-          </StyledApplyButton>
-          <StyledApplyButton variant="contained" color="error">
+          </MButton>
+          <MButton fullWidth variant="contained" color="error">
             Apply
-          </StyledApplyButton>
-        </StyledCardActions>
+          </MButton>
+        </Box>
       </StyledCard>
     </StyledMainCardBox>
   );

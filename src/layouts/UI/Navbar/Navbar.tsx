@@ -1,65 +1,122 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { Facebook, Instagram, Twitter } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import "./index.sass";
-import TopNavigation from "../../../components/TopNavigation";
-import NavbarLogo from "../../../components/NavbarLogo";
-import NavbarSocials from "../../../components/NavbarSocials";
-import { IconButton } from "@mui/material";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [headerClassName, setHeaderClassName] = useState("");
-  const cont = useRef<HTMLDivElement>(null);
-  const handleScroll = useCallback((headerClassName: string) => {
-    if (headerClassName !== "sticky" && window.pageYOffset >= 100) {
-      setHeaderClassName("sticky");
-    } else if (headerClassName === "sticky" && window.pageYOffset < 100) {
-      setHeaderClassName("");
-    }
+export const Navbar: React.FC = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const detectScroll = useCallback(() => {
+    const st = window.pageYOffset || document.documentElement.scrollTop;
+    if (st > 200) setScrolled(true);
+    else setScrolled(false);
   }, []);
 
-  const handleMenuClick = useCallback(() => {
-    if (cont.current) {
-      cont.current.classList.toggle("open");
-      setIsOpen(!isOpen);
-      console.log("clik");
-    }
-  }, [cont, setIsOpen]);
-
-  const callback = useCallback(() => {
-    handleScroll(headerClassName);
-  }, []);
   useEffect(() => {
-    window.addEventListener("scroll", callback);
+    window.addEventListener("scroll", detectScroll);
     return () => {
-      window.removeEventListener("scroll", callback);
+      window.removeEventListener("scroll", detectScroll);
     };
-  }, [headerClassName]);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) setOpenMenu(false);
+  }, [isMobile]);
 
   return (
-    <div className={`${headerClassName ? "sticky" : "normal"}`}>
-      <div ref={cont} className="cont">
+    <Box
+      className={`navbar`}
+      sx={{
+        boxShadow: scrolled ? "0px 0px 30px 0 #1e1e1e22" : "none",
+      }}
+    >
+      <Box
+        sx={{
+          mx: "auto",
+          maxWidth: 1440,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
         <div className="logo">
-          <NavbarLogo />
+          <h1>TechCENTURE</h1>
         </div>
-        {isOpen && (
-          <>
-            <div className="nav">
-              <TopNavigation />
-            </div>
-            <div className="profile">
-              <NavbarSocials />
-            </div>
-          </>
-        )}
-        <div className="burgerMenu">
-          <IconButton onClick={handleMenuClick} component="label" size="large">
+        {isMobile && (
+          <IconButton
+            onClick={() => setOpenMenu(!openMenu)}
+            component="label"
+            size="large"
+          >
             <MenuIcon />
           </IconButton>
+        )}
+
+        {!isMobile && (
+          <>
+            <Box className="menu">
+              <ul>
+                <li>
+                  <a href="#">Home</a>
+                </li>
+                <li>
+                  <li>
+                    <a href="#">Course</a>
+                  </li>
+                  <li>
+                    <a href="#">Contact</a>
+                  </li>
+                  <li>
+                    <a href="#">F.A.Q</a>
+                  </li>
+                </li>
+              </ul>
+            </Box>
+            <Box>
+              <IconButton aria-label="facebook">
+                <Facebook />
+              </IconButton>
+              <IconButton aria-label="instagram">
+                <Instagram />
+              </IconButton>
+              <IconButton aria-label="twitter">
+                <Twitter />
+              </IconButton>
+            </Box>
+          </>
+        )}
+      </Box>
+      {isMobile && (
+        <div
+          ref={ref}
+          className={`menu foldingMenu`}
+          style={{
+            maxHeight: `${openMenu ? ref.current?.scrollHeight : 0}px`,
+            boxShadow: openMenu ? "0px 15px 15px 0 #1e1e1e15" : "none",
+          }}
+        >
+          <a href="#">Home</a>
+          <a href="#">Course</a>
+          <a href="#">Contact</a>
+          <a href="#">F.A.Q</a>
+          <Box my={2}>
+            <IconButton aria-label="facebook">
+              <Facebook />
+            </IconButton>
+            <IconButton aria-label="instagram">
+              <Instagram />
+            </IconButton>
+            <IconButton aria-label="twitter">
+              <Twitter />
+            </IconButton>
+          </Box>
         </div>
-      </div>
-    </div>
+      )}
+    </Box>
   );
 };
-
-export default Navbar;
