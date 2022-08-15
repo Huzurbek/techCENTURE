@@ -36,7 +36,10 @@ const CourseContainer = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.down("sm")]: {},
 }));
-const WhatLearn = () => {
+interface IModalProps {
+  handleEnrollModal: () => void;
+}
+const WhatLearn:React.FC<IModalProps> = ({handleEnrollModal}) => {
   const courseList = [
     {
       id: "1",
@@ -71,6 +74,7 @@ const WhatLearn = () => {
           ],
         },
       ],
+      availableCourse: true,
     },
     {
       id: "2",
@@ -97,6 +101,7 @@ const WhatLearn = () => {
           ],
         },
       ],
+      availableCourse: true,
     },
     {
       id: "3",
@@ -123,18 +128,19 @@ const WhatLearn = () => {
           ],
         },
       ],
+      availableCourse: false,
     },
   ];
   return (
-    <StyledContainer>
+    <StyledContainer id="course">
       <BaseStyledTitle title="What is TechCenture Academy?" />
       <BaseStyledText
         text="
-                                TechCenture Academy is career transitioning academy that focuses on every student
-                                at individual level and provides training and support for everyone who is willing to
-                                take the challenge to become an IT specialist or start a new career in IT field. 
-                                We provide courses that lead our students to the high paid jobs at nation’s top companies.
-                                "
+              TechCenture Academy is career transitioning academy that focuses on every student
+              at individual level and provides training and support for everyone who is willing to
+              take the challenge to become an IT specialist or start a new career in IT field. 
+              We provide courses that lead our students to the high paid jobs at nation’s top companies.
+              "
       />
       <CourseContainer>
         <Box
@@ -158,6 +164,8 @@ const WhatLearn = () => {
             courseTitle={e.title}
             text={e.text}
             details={e.details}
+            availableCourse={e.availableCourse}
+            handleEnrollModal={handleEnrollModal}
           />
         ))}
       </CourseContainer>

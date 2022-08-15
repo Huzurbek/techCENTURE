@@ -22,11 +22,10 @@ const SuperPowers: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
   return (
     <Box
       onClick={resume}
-      sx={{ minHeight: isMobile ? window.innerHeight * 0.4 : "180px" }}
+      sx={{ minHeight: isMobile ? window.innerHeight * 0.4 : "240px", }}
     >
       <StyledTitle> A Course That Can</StyledTitle>
       <StyledTitle
-        // #5B72EE
         sx={{
           color: "#EA5972",
         }}

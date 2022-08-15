@@ -27,7 +27,7 @@ const TrainingHeader: React.FC<IModalProps> = ({ handleEnrollModal }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down(1000));
   return (
-    <Box>
+    <Box id="home">
       <svg viewBox="0 0 1 1" style={{ position: "absolute" }}>
         <defs>
           <clipPath clipPathUnits="objectBoundingBox" id="maska">

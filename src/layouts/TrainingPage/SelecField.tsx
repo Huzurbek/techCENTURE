@@ -44,10 +44,20 @@ const SelectField: FC<PropsType> = (props) => {
       {...rest}
       error={isError}
     >
-      {/* <FormLabel component="legend" sx={{color: '#696984'}}>
-      {label} 
-              </FormLabel>  */}
-      <Select {...field} value={selectedValue ? selectedValue : ""}>
+     
+      <Select {...field} value={selectedValue ? selectedValue : ""}
+       MenuProps={{
+        PaperProps: {
+          sx: {
+            // bgcolor: 'pink',
+            maxHeight: '300px',
+            '& .MuiMenuItem-root': {
+              // padding: 2,
+            },
+          },
+        },
+      }}
+       >
         {data.map((item, index) => (
           <MenuItem key={index} value={item.value}>
             {item.label}

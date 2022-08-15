@@ -4,6 +4,7 @@ import { IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import "./index.sass";
 import { useCallback, useEffect, useRef, useState } from "react";
+import {Link} from 'react-scroll'
 
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -62,29 +63,31 @@ export const Navbar: React.FC = () => {
             <Box className="menu">
               <ul>
                 <li>
-                  <a href="#">Home</a>
+                <Link activeClass="active" to="home" spy={true} smooth={true}>Home</Link>
+                  {/* <a href="#">Home</a> */}
                 </li>
                 <li>
-                  <li>
-                    <a href="#">Course</a>
-                  </li>
-                  <li>
-                    <a href="#">Contact</a>
-                  </li>
-                  <li>
-                    <a href="#">F.A.Q</a>
-                  </li>
+                <Link to="course" spy={true} smooth={true} offset={-100} >Course</Link>
+                  {/* <a href="#">Course</a> */}
+                </li>
+                <li>
+                <Link to="contact" spy={true} smooth={true} offset={-100}>Contact</Link>
+                  {/* <a href="#">Contact</a> */}
+                </li>
+                <li>
+                <Link to="faq" spy={true} smooth={true} offset={-100}>F.A.Q</Link>
+                  {/* <a href="#">F.A.Q</a> */}
                 </li>
               </ul>
             </Box>
             <Box>
-              <IconButton aria-label="facebook">
+              <IconButton aria-label="facebook" href="https://www.facebook.com/techcenture/" target="_blank">
                 <Facebook />
               </IconButton>
-              <IconButton aria-label="instagram">
+              <IconButton aria-label="instagram" href="https://www.instagram.com/" target="_blank">
                 <Instagram />
               </IconButton>
-              <IconButton aria-label="twitter">
+              <IconButton aria-label="twitter" href="https://twitter.com/techcenture" target="_blank">
                 <Twitter />
               </IconButton>
             </Box>

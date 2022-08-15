@@ -13,6 +13,7 @@ import {
 import * as Yup from "yup";
 import { Field, Form, FormikProvider, useFormik } from "formik";
 import { FormInput } from "../../components/Form/form_input";
+import { MButton } from "../../components/Button";
 
 interface IModalProps {
   handleEnrollModal?: (userEnrolled: any) => void;
@@ -178,33 +179,32 @@ const ContactForm: React.FC<IModalProps> = ({ handleEnrollModal }) => {
             />
           </StyledFormControl>
 
-          <StyledFormControl
-            fullWidth
+          <Box
             sx={{
-              flexDirection: "row",
+              mt: 2,
+              display: "flex",
               justifyContent: "space-between",
-              marginTop: "10px",
             }}
           >
-            <StyledApplyButton
+            <MButton
               variant="contained"
               color="error"
-              sx={{ width: "fit-content", alignSelf: "end" }}
+              sx={{ width: "fit-content", alignSelf: "end", borderRadius: '50px' }}
               onClick={() => {
                 formik.resetForm();
               }}
             >
               Clear
-            </StyledApplyButton>
-            <StyledApplyButton
+            </MButton>
+            <MButton
               variant="contained"
               color="error"
-              sx={{ width: "fit-content", alignSelf: "end" }}
+              sx={{ width: "fit-content", alignSelf: "end",borderRadius: '50px' }}
               type="submit"
             >
               Submit
-            </StyledApplyButton>
-          </StyledFormControl>
+            </MButton>
+          </Box>
         </Form>
       </FormikProvider>
       <Snackbar

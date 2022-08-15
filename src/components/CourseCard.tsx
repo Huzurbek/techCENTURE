@@ -92,7 +92,7 @@ const StyledCourseTitle = styled(Typography)(({ theme }) => ({
 
 const StyledCourseIntro = styled(Typography)(({ theme }) => ({
   fontWeight: "400",
-  fontSize: "14px",
+  fontSize: "16px",
   lineHeight: "140%",
   color: "#696984",
   display: "-webkit-box",
@@ -102,49 +102,23 @@ const StyledCourseIntro = styled(Typography)(({ theme }) => ({
   textOverflow: "ellipsis",
 }));
 
-const StyledCardActions = styled(CardActions)(({ theme }) => ({
-  justifyContent: "space-between",
-  [theme.breakpoints.down(1080)]: {},
-  [theme.breakpoints.down("md")]: {
-    paddingLeft: "16px",
-    paddingRight: "16px",
-  },
-  [theme.breakpoints.down("sm")]: {},
-}));
 const StyledContentText = styled(Typography)(({ theme }) => ({
   fontWeight: "400",
-  fontSize: "14px",
+  fontSize: "16px",
   textAlign: "justify",
   letterSpacing: "0.02em",
   color: "#696984",
-  [theme.breakpoints.down(1080)]: {},
-  [theme.breakpoints.down("md")]: {
-    // fontSize: '14px',
-  },
-  [theme.breakpoints.down("sm")]: {},
 }));
-const StyledApplyButton = styled(Button)(({ theme }) => ({
-  borderRadius: "19px",
-  minWidth: "90px",
-  height: "30px",
-  fontWeight: "400",
-  fontSize: "14px",
-  [theme.breakpoints.down(1080)]: {},
-  [theme.breakpoints.down("md")]: {
-    height: "20px",
-    fontWeight: "500",
-    fontSize: "12px",
-  },
-  [theme.breakpoints.down("sm")]: {
-    borderRadius: "20px",
-  },
-}));
+
 
 interface ICourseCard {
   image: string;
   courseTitle: string;
   text: string;
   details: { title: string; list: string[] }[];
+  availableCourse: boolean;
+  handleEnrollModal: () => void ;
+ 
 }
 
 const CourseCard: React.FC<ICourseCard> = ({
@@ -152,12 +126,19 @@ const CourseCard: React.FC<ICourseCard> = ({
   courseTitle,
   text,
   details,
+  availableCourse,
+  handleEnrollModal
 }) => {
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
+  const handleApply = () => {
+    handleEnrollModal()
+    if (expanded) {
+      setExpanded(false)
+    }
+  }
   return (
     <StyledMainCardBox>
       <StyledCard>
@@ -171,7 +152,6 @@ const CourseCard: React.FC<ICourseCard> = ({
           <StyledCourseTitle>{courseTitle}</StyledCourseTitle>
           <StyledCourseIntro
             sx={{
-              // background: expanded ? 'pink': 'blue',
               display: expanded ? "block" : "-webkit-box",
             }}
           >
@@ -181,20 +161,25 @@ const CourseCard: React.FC<ICourseCard> = ({
         </StyledCardContent>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent sx={{ paddingBottom: "5px!important" }}>
-            <StyledContentText paragraph>
               {details.map((e, index) => (
                 <Box key={index}>
-                  <p style={{ marginBottom: "2px", fontWeight: "600" }}>
+                  <StyledContentText style={{ marginBottom: "2px", fontWeight: "600" }}>
                     {e.title}
-                  </p>
-                  <ul style={{ listStyleType: "circle", paddingLeft: "15px" }}>
+                  </StyledContentText>
+                  <ul style={{ 
+                    fontWeight: "400",
+                    fontSize: "16px",
+                    textAlign: "justify",
+                    letterSpacing: "0.02em",
+                    color: "#696984",
+                    listStyleType: "circle",
+                    paddingLeft: "15px" }}>
                     {e.list.map((element, ind) => (
                       <li key={ind}>{element}</li>
                     ))}
                   </ul>
                 </Box>
               ))}
-            </StyledContentText>
           </CardContent>
         </Collapse>
         <Box px={2} pb={2} textAlign="right">
@@ -210,8 +195,14 @@ const CourseCard: React.FC<ICourseCard> = ({
           >
             {expanded ? "Less" : "Learn more"}
           </MButton>
-          <MButton fullWidth variant="contained" color="error">
-            Apply
+          <MButton 
+            fullWidth
+            variant="contained" 
+            color="error"
+            disabled={!availableCourse}
+            onClick={handleApply}
+           >
+            {availableCourse ? 'APPLY' : "COMIG SOON"}
           </MButton>
         </Box>
       </StyledCard>

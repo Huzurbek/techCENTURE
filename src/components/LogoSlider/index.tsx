@@ -18,39 +18,63 @@ const LogoSlider: React.FC<Props> = (props) => {
   const logos = [
     {
       id: 1,
-      logo:
-        "https://assets.algoexpert.io/spas/main/prod/g5f9f36b9fd-prod/dist/images/a2b3c3709ffedce2a22a.png",
+      logo: "google.png",
       title: "Google",
     },
     {
       id: 2,
-      logo:
-        "https://assets.algoexpert.io/spas/main/prod/g5f9f36b9fd-prod/dist/images/3cd767dea94a85078ca4.png",
-      title: "Expert Coach",
+      logo: "amazon.png",
+      title: "Amazon",
     },
     {
       id: 3,
-      logo:
-        "https://assets.algoexpert.io/spas/main/prod/g5f9f36b9fd-prod/dist/images/3b7d9f4b073deb6a9b74.png",
-      title: "Expert Coach",
+      logo: "blackrock.png",
+      title: "Blackrock",
     },
     {
       id: 4,
-      logo:
-        "https://assets.algoexpert.io/spas/main/prod/g5f9f36b9fd-prod/dist/images/6591cdc0702b32310306.png",
-      title: "Expert Coach",
+      logo: "bloomberg.png",
+      title: "Bloomberg",
     },
     {
       id: 5,
-      logo:
-        "https://assets.algoexpert.io/spas/main/prod/g5f9f36b9fd-prod/dist/images/b2bd91d7b87b2181ca45.png",
-      title: "Expert Coach",
+      logo: "consensys.png",
+      title: "Consensys",
     },
     {
       id: 6,
-      logo:
-        "https://assets.algoexpert.io/spas/main/prod/g5f9f36b9fd-prod/dist/images/7ae42bac3b34999c0db3.png",
-      title: "Expert Coach",
+      logo: "facebook.png",
+      title: "Facebook",
+    },
+    {
+      id: 7,
+      logo: "microsoft.png",
+      title: "Microsoft",
+    },
+    {
+      id: 8,
+      logo: "morgan.png",
+      title: "Morgan",
+    },
+    {
+      id: 9,
+      logo: "sigma.png",
+      title: "Sigma",
+    },
+    {
+      id: 10,
+      logo: "simon.png",
+      title: "Simon",
+    },
+    {
+      id: 11,
+      logo: "universal.png",
+      title: "Universal",
+    },
+    {
+      id: 12,
+      logo: "zillow.png",
+      title: "Zillow",
     },
   ];
   const slider = [];
@@ -65,7 +89,7 @@ const LogoSlider: React.FC<Props> = (props) => {
             style={{ width: "100px", display: "flex", alignItems: "center" }}
           >
             <img
-              src={logo.logo}
+              src={`assets/partnerCompanyLogo/${logo.logo}`}
               alt={logo.title}
               style={{
                 filter: "grayscale(100%) brightness(0)",

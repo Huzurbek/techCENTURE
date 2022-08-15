@@ -28,8 +28,10 @@ const Home: React.FC = () => {
   const [enrollModal, setEnrollModal] = React.useState(false);
   const [enrolled, setEnrolled] = React.useState(false);
   const handleEnrollModal = (userEnrolled = false) => {
+    console.log('modal ochildi')
     setEnrollModal(!enrollModal);
     if (userEnrolled === true) {
+      
       setEnrolled(true);
     }
   };
@@ -64,7 +66,7 @@ const Home: React.FC = () => {
       <InnerContainer>
         <CompanyPartnerList />
         <WhyUs />
-        <WhatLearn />
+        <WhatLearn handleEnrollModal={handleEnrollModal}/>
         <Integrations />
         <Testimonial />
         <Faq />

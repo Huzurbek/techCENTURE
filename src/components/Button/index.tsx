@@ -31,15 +31,15 @@ type ButtonVariant = "contained" | "outlined" | "text";
 const ButtonStyle = styled(Button)(
   ({
     theme,
-    styleProps,
+    styleprops,
   }: {
     theme: Theme;
-    styleProps: {
+    styleprops: {
       color: ButtonColor;
       variant: ButtonVariant;
     };
   }) => {
-    const { color, variant } = styleProps;
+    const { color, variant } = styleprops;
 
     const styleContained = (color: ColorSchema) => ({
       boxShadow: theme.shadows["3"],
@@ -48,7 +48,7 @@ const ButtonStyle = styled(Button)(
       "&:hover": {
         backgroundColor: theme.palette[color].dark,
       },
-    });
+});
 
     const styleOutlined = (color: ColorSchema) => ({
       color: theme.palette[color].main,
@@ -99,7 +99,7 @@ export const MButton = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         variant={variant}
         size="large"
-        styleProps={{ color, variant }}
+        styleprops={{ color, variant }}
         theme={theme}
         {...other}
         sx={{ borderRadius: "8px", ...other.sx }}

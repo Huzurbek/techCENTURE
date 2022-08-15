@@ -67,7 +67,7 @@ const Faq = () => {
   };
 
   return (
-    <StyledContainer>
+    <StyledContainer id="faq">
       <BaseStyledTitle title="Frequently Asked Questions" />
 
       <StyledAccordion

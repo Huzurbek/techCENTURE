@@ -58,7 +58,7 @@ const StyledFormContainer = styled(Box)(({ theme }) => ({
 }));
 const GetInTouch = () => {
   return (
-    <StyledMainWrapper>
+    <StyledMainWrapper id="contact">
       <BaseStyledTitle title="Get In Touch" />
 
       <StyledContainer>

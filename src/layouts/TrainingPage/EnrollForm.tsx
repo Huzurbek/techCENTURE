@@ -227,19 +227,6 @@ const EnrollForm: React.FC<IModalProps> = ({ handleEnrollModal }) => {
               size="small"
             />
           </StyledFormControl>
-          {/* <Autocomplete
-            options={allCountries}
-            getOptionLabel={(option) => option.label}
-            renderInput={(props) => (
-              <TextField {...props}  label="Select country" fullWidth />
-            )}
-            isOptionEqualToValue={(option,val)=>option.value===val.value}
-            onChange={(_,value)=>formik.setFieldValue("country",value?.label||"")}
-            value={country}
-            disablePortal
-            size="small"
-            sx={{marginBottom: '20px'}}
-          /> */}
           <SelectField
             name="country"
             label="Uzbekistan"
@@ -311,7 +298,7 @@ const EnrollForm: React.FC<IModalProps> = ({ handleEnrollModal }) => {
             <MButton
               variant="contained"
               color="error"
-              sx={{ width: "fit-content", alignSelf: "end" }}
+              sx={{ width: "fit-content", alignSelf: "end", borderRadius: '50px' }}
               onClick={() => {
                 formik.resetForm();
               }}
@@ -321,7 +308,7 @@ const EnrollForm: React.FC<IModalProps> = ({ handleEnrollModal }) => {
             <MButton
               variant="contained"
               color="error"
-              sx={{ width: "fit-content", alignSelf: "end" }}
+              sx={{ width: "fit-content", alignSelf: "end", borderRadius: '50px' }}
               type="submit"
             >
               Submit
