@@ -60,7 +60,7 @@ const StyledFormControl = styled(FormControl)(({ theme }) => ({
 // }));
 
 const ContactForm = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const handleClose = (
     _event?: React.SyntheticEvent | Event,
     reason?: string
