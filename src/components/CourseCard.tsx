@@ -113,16 +113,18 @@ const StyledContentText = styled(Typography)(({ theme }) => ({
 
 interface ICourseCard {
   image: string;
+  courseId: string,
   courseTitle: string;
   text: string;
   details: { title: string; list: string[] }[];
   availableCourse: boolean;
-  handleEnrollModal: () => void ;
+  handleEnrollModal: (setEnrollModal: boolean, whichCourse: string) => void ;
  
 }
 
 const CourseCard: React.FC<ICourseCard> = ({
   image,
+  courseId,
   courseTitle,
   text,
   details,
@@ -134,7 +136,7 @@ const CourseCard: React.FC<ICourseCard> = ({
     setExpanded(!expanded);
   };
   const handleApply = () => {
-    handleEnrollModal()
+    handleEnrollModal(false, courseId)
     if (expanded) {
       setExpanded(false)
     }

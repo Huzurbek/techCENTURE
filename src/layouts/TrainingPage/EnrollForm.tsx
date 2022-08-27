@@ -5,6 +5,7 @@ import {
   FormControl,
   TextField,
   FormControlLabel,
+  Button,
   FormGroup,
   FormLabel,
   styled,
@@ -17,12 +18,14 @@ import * as Yup from "yup";
 import { Field, Form, FormikProvider, useFormik } from "formik";
 import { useMemo, useRef, useState } from "react";
 import countries from "../../constants/countries";
+import courses from "../../constants/courses";
 import { FormInput } from "../../components/Form/form_input";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import SelectField from "./SelecField";
-import { MButton } from "../../components/Button";
 
 enum Options {
   Online = "online",
@@ -31,6 +34,7 @@ enum Options {
 }
 
 interface IModalProps {
+  courseEnroll: string,
   handleEnrollModal: (userEnrolled: any) => void;
 }
 const validation = Yup.object({
@@ -50,6 +54,7 @@ type FormValues = {
   state: string;
   postal: string;
   country: string;
+  course: string;
   phone: string;
   email: string;
   message: string;
@@ -81,13 +86,23 @@ const StyledMainContainer = styled(Box)({
   },
 });
 
-const EnrollForm: React.FC<IModalProps> = ({ handleEnrollModal }) => {
+const EnrollForm: React.FC<IModalProps> = ({ handleEnrollModal, courseEnroll }) => {
+  console.log({ EnrollForm: courseEnroll })
   const allCountries = useMemo(() => {
     return countries.map((country) => ({
       label: country.label,
       value: country.code,
     }));
   }, [countries]);
+
+  const selectedCourse = courses.find(course => course.id == courseEnroll)
+  
+  const allCourses = useMemo(() => {
+    return courses.filter(course => course.availableCourse).map((course) => ({
+      label: course.title,
+      value: course.id,
+    }));
+  }, [courses]);
   const input = useRef<HTMLInputElement>(null);
 
   const formik = useFormik<FormValues>({
@@ -101,6 +116,7 @@ const EnrollForm: React.FC<IModalProps> = ({ handleEnrollModal }) => {
       state: "",
       postal: "",
       country: "US",
+      course: selectedCourse ? selectedCourse.id : allCourses[0].value,
       phone: "",
       email: "",
       message: "",
@@ -114,23 +130,46 @@ const EnrollForm: React.FC<IModalProps> = ({ handleEnrollModal }) => {
       setSubmitting(false);
       // resetForm()
       // setIsDisable(true);
-      // fetch("/api/application", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(values),
-      // })
-      //   .then((response) => {
-      //     response.json().then((result) => {
-      //       console.log(result);
-      //       clearForm();
-      //       handleEnrollModal(true);
-      //     });
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
+      const body = new FormData();
+      const selectedCouse = allCourses.find(
+        (course) => course.value === values.course
+      );
+      const selectedCourseLabel = selectedCouse && selectedCouse != undefined ? selectedCouse.label : "";
+
+      body.append("courseId", values.course);
+      body.append("courseLabel", selectedCourseLabel);
+      body.append("first_name", values.first_name);
+      body.append("last_name", values.last_name);
+      body.append("address1", values.address1);
+      body.append("address2", values.address2);
+      body.append("city", values.city);
+      body.append("state", values.state);
+      body.append("postal", values.postal);
+      body.append("country", values.country);
+      body.append("phone", values.phone);
+      body.append("email", values.email);
+      body.append("message", values.message);
+      body.append("selectedOption", values.selectedOption);
+      body.append(
+        "birthday",
+        values.birthday !== null ? values.birthday.toISOString() : ""
+      );
+      body.append("file", values.file !== null ? values.file : "");
+      // console.log("origin: ", window.location.origin)
+      fetch("/api/application", {
+        method: "POST",
+        body,
+      })
+        .then((response) => {
+          response.json().then((result) => {
+            console.log(result);
+            // clearForm();
+            handleEnrollModal(true);
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   });
   const {
@@ -159,6 +198,7 @@ const EnrollForm: React.FC<IModalProps> = ({ handleEnrollModal }) => {
       />
       <FormikProvider value={formik}>
         <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+          <SelectField name="course" data={allCourses} fullWidth  />
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <MobileDatePicker
               label="Birthday"
@@ -227,6 +267,19 @@ const EnrollForm: React.FC<IModalProps> = ({ handleEnrollModal }) => {
               size="small"
             />
           </StyledFormControl>
+          {/* <Autocomplete
+            options={allCountries}
+            getOptionLabel={(option) => option.label}
+            renderInput={(props) => (
+              <TextField {...props}  label="Select country" fullWidth />
+            )}
+            isOptionEqualToValue={(option,val)=>option.value===val.value}
+            onChange={(_,value)=>formik.setFieldValue("country",value?.label||"")}
+            value={country}
+            disablePortal
+            size="small"
+            sx={{marginBottom: '20px'}}
+          /> */}
           <SelectField
             name="country"
             label="Uzbekistan"
@@ -278,42 +331,46 @@ const EnrollForm: React.FC<IModalProps> = ({ handleEnrollModal }) => {
               />
             </RadioGroup>
           </StyledFormControl>
-
-          <MButton
-            size="large"
-            variant="contained"
-            color="primary"
-            sx={{ width: "fit-content", alignSelf: "end", color: "white" }}
-            onClick={() => input.current?.click()}
+          <StyledFormControl
+            fullWidth
+            sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
           >
-            Choose your pdf file
-          </MButton>
-          <Box
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ width: "fit-content", alignSelf: "end", color: "white" }}
+              onClick={() => input.current?.click()}
+            >
+              Choose your pdf file
+            </Button>
+          </StyledFormControl>
+          <StyledFormControl
+            fullWidth
             sx={{
-              mt: 3,
-              display: "flex",
+              flexDirection: "row",
               justifyContent: "space-between",
+              marginTop: "10px",
             }}
           >
-            <MButton
+            <Button
               variant="contained"
-              color="error"
-              sx={{ width: "fit-content", alignSelf: "end", borderRadius: '50px' }}
+              color="warning"
+              sx={{ width: "fit-content", alignSelf: "end" }}
               onClick={() => {
                 formik.resetForm();
               }}
             >
               Clear
-            </MButton>
-            <MButton
+            </Button>
+            <Button
               variant="contained"
               color="error"
-              sx={{ width: "fit-content", alignSelf: "end", borderRadius: '50px' }}
+              sx={{ width: "fit-content", alignSelf: "end" }}
               type="submit"
             >
               Submit
-            </MButton>
-          </Box>
+            </Button>
+          </StyledFormControl>
         </Form>
       </FormikProvider>
     </StyledMainContainer>

@@ -26,10 +26,12 @@ const InnerContainer = styled(Box)(({ theme }) => ({
 
 const Home: React.FC = () => {
   const [enrollModal, setEnrollModal] = React.useState(false);
+  const [courseEnroll, setCourseEnroll] = React.useState("");
   const [enrolled, setEnrolled] = React.useState(false);
-  const handleEnrollModal = (userEnrolled = false) => {
-    console.log('modal ochildi')
+  const handleEnrollModal = (userEnrolled = false, whichCourse = "") => {
+    // console.log('modal ochildi: ', whichCourse)
     setEnrollModal(!enrollModal);
+    setCourseEnroll(whichCourse)
     if (userEnrolled === true) {
       
       setEnrolled(true);
@@ -45,7 +47,7 @@ const Home: React.FC = () => {
         title="Course Registration Form"
         introText="Please fill in the form"
       >
-        <EnrollForm handleEnrollModal={handleEnrollModal} />
+        <EnrollForm handleEnrollModal={handleEnrollModal} courseEnroll={courseEnroll} />
       </BaseModal>
       <Snackbar
         anchorOrigin={{
